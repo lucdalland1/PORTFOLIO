@@ -1,37 +1,99 @@
-import Section from '@/lib/_components/Section'
-import Apropos from '@/lib/Section/Apropos'
-import ContactSection from '@/lib/Section/Contact'
-import MesCompetences from '@/lib/Section/MesCompetences'
-import MesProjets from '@/lib/Section/MesProjets'
-import SectionPresentation from '@/lib/Section/SectionPresentation'
-import Service from '@/lib/Section/Service'
-import React from 'react'
+"use client"
 
-function page() {
+import Section from "@/lib/_components/Section"
+import Apropos from "@/lib/Section/Apropos"
+import ContactSection from "@/lib/Section/Contact"
+import MesCompetences from "@/lib/Section/MesCompetences"
+import MesProjets from "@/lib/Section/MesProjets"
+import SectionPresentation from "@/lib/Section/SectionPresentation"
+import Service from "@/lib/Section/Service"
+import { useEffect, useRef } from "react"
+
+function Page() {
+  const pageRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const options = {
+      root: null,
+      rootMargin: "0px",
+      threshold: 0.1, // 10% de l'élément visible
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        // Ajoute la classe quand l'élément entre dans le viewport
+        if (entry.isIntersecting) {
+          entry.target.classList.add("animate-section")
+        } else {
+          // Retire la classe quand l'élément sort du viewport
+          entry.target.classList.remove("animate-section")
+        }
+      })
+    }, options)
+
+    // Sélectionner tous les éléments à animer
+    if (pageRef.current) {
+      const sections = pageRef.current.querySelectorAll(".section-animate")
+      sections.forEach((section) => {
+        observer.observe(section)
+      })
+    }
+
+    return () => {
+      if (pageRef.current) {
+        const sections = pageRef.current.querySelectorAll(".section-animate")
+        sections.forEach((section) => {
+          observer.unobserve(section)
+        })
+      }
+    }
+  }, [])
+
   return (
-    <div className='flex flex-col gap-3'>
+    <div ref={pageRef} className="flex flex-col gap-5">
       <Section>
-      <SectionPresentation/>
-      <Apropos/>
+        <div className="section-animate">
+          <SectionPresentation />
+        </div>
+        <div className="section-animate">
+          <Apropos />
+        </div>
       </Section>
-      <div className='bg-primary/15'>
+      <div className="bg-primary/15">
         <Section>
-        <MesCompetences />
-
+          <div className="section-animate">
+            <MesCompetences />
+          </div>
         </Section>
       </div>
       <Section>
-        <Service />
-        <MesProjets/>
-        
-        </Section>
-
-        <div className='bg-primary/40'>
-        <ContactSection />
-
+        <div className="section-animate">
+          <Service />
         </div>
-  </div>
+        <div className="section-animate">
+          <MesProjets />
+        </div>
+      </Section>
+      <div className="bg-primary/40">
+        <div className="section-animate">
+          <ContactSection />
+        </div>
+      </div>
+
+      <style jsx global>{`
+        .section-animate {
+          opacity: 0;
+          transform: translateY(30px);
+          transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        
+        .animate-section {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      `}</style>
+    </div>
   )
 }
 
-export default page
+export default Page

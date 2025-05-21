@@ -5,13 +5,13 @@ import { Facebook, Hourglass, Linkedin, Mail, MapPinPlus, Twitter, TwitterIcon, 
 
 function ContactSection() {
   return (
-    <div className='flex flex-col sm:flex-row justify-center items-center pt-20'>
-        <div className='flex sm:flex-1 text-center sm:text-left flex-col gap-6'>
+    <div className='flex flex-col sm:flex-row justify-center items-center pt-20  gap-3'>
+        <div className='flex sm:flex-1 m-auto text-center sm:text-left flex-col gap-6'>
   <Typography variant='h3' className='text-2xl font-semibold text-gray-900'>
     Let's work together
   </Typography>
   
-  <div className='flex flex-col sm:flex-row gap-4 sm:gap-8'>
+  <div className='flex flex-col gap-4 sm:gap-8 m-auto'>
     {/* Contact Info */}
     <div className='flex flex-row gap-2 items-center'>
       <Mail className="text-xl text-[#2293c3]" />
@@ -49,7 +49,7 @@ function ContactSection() {
   </div>
 </div>
 
-        <div className='sm:flex-1'>
+        <div className=' sm:flex-1'>
         <ContactForm/>
         </div>
     </div>
