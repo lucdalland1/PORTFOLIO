@@ -43,9 +43,9 @@ function Apropos() {
 <Typography variant='h3'>
         Langues
       </Typography>
-      <Langues>
-          jdjkd  dj
-      </Langues>
+      <Langues />
+        
+      
 
 </div>
       </div>

@@ -45,10 +45,11 @@ export default function RootLayout({
         >    
           <Section>
             <Header />
+            </Section>
             <main className="pt-20 min-sm:pt-40 flex-grow min-h-screen">
               {children}
             </main>
-          </Section>
+          
           <Footer />
         </ThemeProvider>
       </body>
