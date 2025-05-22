@@ -142,7 +142,9 @@ function SectionPresentation() {
                 size="lg"
                 className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-lg flex-1 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-blue-500/20"
               >
+                <Link href='tel:+242067847109'>
                 Embauchez-moi
+                </Link>
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
               <Button
