@@ -4,7 +4,6 @@ import Image from 'next/image'
 import Pourcentage from '../_components/Pourcentage'
 import Langues from '../_components/Langues'
 
-
 function Apropos() {
   return (
     <div id='Apropos' className="flex flex-col sm:flex-row items-center justify-center h-auto pt-20 gap-20">
@@ -24,7 +23,7 @@ function Apropos() {
         <Typography variant="body">
           Développeur fullstack passionné, je conçois et réalise des sites web ainsi que des applications mobiles alliant performance, esthétique et ergonomie.
           Grâce à une solide expérience en développement front-end et back-end, je transforme des idées en solutions numériques concrètes et efficaces.
-          Curieux de nature et animé par l'envie constante d’apprendre, je maîtrise un large éventail de langages et de frameworks, tout en restant attentif aux dernières innovations technologiques.
+          Curieux de nature et animé par l&apos;envie constante d&apos;apprendre, je maîtrise un large éventail de langages et de frameworks, tout en restant attentif aux dernières innovations technologiques.
           Mon engagement : livrer un code propre, fiable et évolutif, tout en apportant une réelle valeur ajoutée à chaque projet.
           Si vous recherchez un développeur rigoureux, créatif et pleinement investi, je serais ravi de collaborer avec vous.
         </Typography>
@@ -41,7 +40,6 @@ function Apropos() {
           <div className="flex flex-col gap-3 sm:flex-row">
             <Langues name="Français" level="Natif"  NbreEtoile={4} />
             <Langues name="Anglais" level="Débutant"  NbreEtoile={0} />
-            
           </div>
         </div>
       </div>

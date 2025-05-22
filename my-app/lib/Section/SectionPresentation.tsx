@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from "react"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Typography } from "@/components/ui/Typography"
-import { Download, ArrowRight, Github, Linkedin, Twitter } from "lucide-react"
+import { ArrowRight, Github, Linkedin, Twitter } from "lucide-react" // ✅ Download supprimé
 import { motion } from "framer-motion"
 import Link from "next/link"
 
@@ -84,11 +84,11 @@ function SectionPresentation() {
 
   return (
     <div
-    id="Sectionpresentation"
+      id="Sectionpresentation"
       ref={sectionRef}
       className="relative py-16 md:py-24 lg:py-32 px-4 sm:px-6 lg:px-8 overflow-hidden bg-gradient-to-b from-white to-gray-50 dark:from-gray-900 dark:to-gray-950"
     >
-      {/* Formes décoratives en arrière-plan */}
+      {/* Formes décoratives */}
       <motion.div
         className="absolute top-0 right-0 w-1/2 h-1/2 bg-blue-50 dark:bg-blue-900/10 rounded-full blur-3xl -z-10"
         initial="hidden"
@@ -110,7 +110,7 @@ function SectionPresentation() {
           animate={isVisible ? "visible" : "hidden"}
           variants={containerVariants}
         >
-          {/* Bloc Texte + Boutons */}
+          {/* Bloc texte + boutons */}
           <div className="w-full lg:w-1/2 flex flex-col items-center lg:items-start text-center lg:text-left space-y-8">
             <motion.div variants={itemVariants}>
               <div className="inline-flex items-center px-3 py-1 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 text-sm font-medium mb-4">
@@ -133,7 +133,7 @@ function SectionPresentation() {
               </Typography>
               <Typography variant="body" className="text-lg text-gray-600 dark:text-gray-300 max-w-lg">
                 Je crée des expériences numériques exceptionnelles avec une attention particulière aux détails, à la
-                performance et à l'accessibilité.
+                performance et à l&apos;accessibilité.
               </Typography>
             </motion.div>
 
@@ -149,10 +149,10 @@ function SectionPresentation() {
                 variant="outline"
                 size="lg"
                 className="border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 px-8 py-6 rounded-lg flex-1 transition-all duration-300"
-              asChild
+                asChild
               >
-                <Link href='https://lucdalland.my.canva.site/'>
-                Télécharger mon CV
+                <Link href="https://lucdalland.my.canva.site/">
+                  Télécharger mon CV
                 </Link>
               </Button>
             </motion.div>
@@ -164,13 +164,10 @@ function SectionPresentation() {
             </motion.div>
           </div>
 
-          {/* Image avec effet */}
+          {/* Image */}
           <motion.div className="w-full lg:w-1/2 flex justify-center lg:justify-end relative" variants={imageVariants}>
             <div className="relative">
-              {/* Cercle décoratif */}
               <div className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-500/20 to-purple-500/20 blur-2xl transform scale-110 -z-10"></div>
-
-              {/* Image avec bordure */}
               <div className="relative w-64 h-64 sm:w-80 sm:h-80 rounded-full overflow-hidden border-4 border-white dark:border-gray-800 shadow-xl">
                 <Image
                   src="/images/luc2.png"
@@ -182,7 +179,7 @@ function SectionPresentation() {
                 />
               </div>
 
-              {/* Badge décoratif */}
+              {/* Badge */}
               <motion.div
                 className="absolute -bottom-4 -right-4 bg-white dark:bg-gray-800 px-4 py-2 rounded-full shadow-lg flex items-center gap-2"
                 initial={{ scale: 0, opacity: 0 }}
@@ -190,7 +187,7 @@ function SectionPresentation() {
                 transition={{ delay: 1, duration: 0.5, type: "spring" }}
               >
                 <span className="text-blue-600 dark:text-blue-400 font-bold">1+</span>
-                <span className="text-gray-700 dark:text-gray-300 text-sm">ans d'expérience Entreprise</span>
+                <span className="text-gray-700 dark:text-gray-300 text-sm">ans d&apos;expérience Entreprise</span>
               </motion.div>
             </div>
           </motion.div>
@@ -200,7 +197,7 @@ function SectionPresentation() {
   )
 }
 
-// Composant pour les boutons sociaux
+// Composant bouton réseau
 function SocialButton({ icon, href }: { icon: React.ReactNode; href: string }) {
   return (
     <a

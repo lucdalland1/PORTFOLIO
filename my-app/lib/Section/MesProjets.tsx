@@ -13,28 +13,29 @@ function MesProjets() {
   const subtitleRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.target === titleRef.current && entry.isIntersecting) {
-            setIsVisible((prev) => ({ ...prev, title: true }))
-          }
-          if (entry.target === subtitleRef.current && entry.isIntersecting) {
-            setIsVisible((prev) => ({ ...prev, subtitle: true }))
-          }
-        })
-      },
-      { threshold: 0.1 },
-    )
-
-    if (titleRef.current) observer.observe(titleRef.current)
-    if (subtitleRef.current) observer.observe(subtitleRef.current)
-
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.target === titleRef.current && entry.isIntersecting) {
+          setIsVisible((prev) => ({ ...prev, title: true }))
+        }
+        if (entry.target === subtitleRef.current && entry.isIntersecting) {
+          setIsVisible((prev) => ({ ...prev, subtitle: true }))
+        }
+      })
+    }, { threshold: 0.1 })
+  
+    const currentTitleRef = titleRef.current
+    const currentSubtitleRef = subtitleRef.current
+  
+    if (currentTitleRef) observer.observe(currentTitleRef)
+    if (currentSubtitleRef) observer.observe(currentSubtitleRef)
+  
     return () => {
-      if (titleRef.current) observer.unobserve(titleRef.current)
-      if (subtitleRef.current) observer.unobserve(subtitleRef.current)
+      if (currentTitleRef) observer.unobserve(currentTitleRef)
+      if (currentSubtitleRef) observer.unobserve(currentSubtitleRef)
     }
   }, [])
+  
 
   return (
     <div id="Mesprojets" className="flex flex-col justify-center items-center pt-20 gap-10 pb-20 px-4">

@@ -56,11 +56,11 @@ export async function submitContactForm(formData: FormData) {
     return {
       message: "Merci pour votre message ! Je vous répondrai bientôt.",
     }
-  } catch (error: any) {
+  } catch (error: Error | unknown) {
     console.error('Erreur détaillée lors de l\'envoi de l\'email:', {
-      message: error?.message || 'Erreur inconnue',
-      stack: error?.stack,
-      code: error?.code
+      message: error instanceof Error ? error.message : 'Erreur inconnue',
+      stack: error instanceof Error ? error.stack : undefined,
+      code: error instanceof Error ? (error as { code?: string }).code : undefined
     });
     return {
       message: "Désolé, une erreur s'est produite lors de l'envoi du message. Veuillez réessayer plus tard.",

@@ -8,39 +8,41 @@ function MesCompetences() {
   const componentRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
+    const currentComponent = componentRef.current; // ✅ copie locale sécurisée
+  
     const options = {
       root: null,
       rootMargin: "0px",
       threshold: 0.1,
-    }
-
+    };
+  
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          entry.target.classList.add("animate-element")
+          entry.target.classList.add("animate-element");
         } else {
-          entry.target.classList.remove("animate-element")
+          entry.target.classList.remove("animate-element");
         }
-      })
-    }, options)
-
-    // Observer les éléments à animer
-    if (componentRef.current) {
-      const elements = componentRef.current.querySelectorAll("[data-animate]")
+      });
+    }, options);
+  
+    if (currentComponent) {
+      const elements = currentComponent.querySelectorAll("[data-animate]");
       elements.forEach((element) => {
-        observer.observe(element)
-      })
+        observer.observe(element);
+      });
     }
-
+  
     return () => {
-      if (componentRef.current) {
-        const elements = componentRef.current.querySelectorAll("[data-animate]")
+      if (currentComponent) {
+        const elements = currentComponent.querySelectorAll("[data-animate]");
         elements.forEach((element) => {
-          observer.unobserve(element)
-        })
+          observer.unobserve(element);
+        });
       }
-    }
-  }, [])
+    };
+  }, []);
+  
 
   return (
     <div id="Mescompetences" ref={componentRef} className="flex flex-col items-center justify-center p-10 gap-10 w-full">

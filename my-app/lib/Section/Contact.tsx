@@ -1,14 +1,14 @@
 import React from 'react'
 import ContactForm from '../_components/ContactForm'
 import { Typography } from '@/components/ui/Typography'
-import { Facebook, Hourglass, Linkedin, Mail, MapPinPlus, Twitter, TwitterIcon, } from 'lucide-react'
+import { Facebook, Hourglass, Linkedin, Mail, MapPinPlus, TwitterIcon } from 'lucide-react'
 
 function ContactSection() {
   return (
     <div id='Contact' className='flex flex-col sm:flex-row justify-center items-center pt-20  gap-3'>
         <div className='flex sm:flex-1 m-auto text-center sm:text-left flex-col gap-6'>
   <Typography variant='h3' className='text-2xl font-semibold text-gray-900'>
-    Let's work together
+    Let&apos;s work together
   </Typography>
   
   <div className='flex flex-col gap-4 sm:gap-8 m-auto'>

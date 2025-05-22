@@ -8,8 +8,6 @@ import { Textarea } from "@/components/ui/textarea"
 import { Typography } from "@/components/ui/Typography"
 import { useState } from "react"
 
-
-
 export default function ContactForm() {
   const [pending, setPending] = useState(false)
   const [message, setMessage] = useState("")
@@ -19,7 +17,7 @@ export default function ContactForm() {
     try {
       const response = await submitContactForm(formData)
       setMessage(response.message)
-    } catch (error) {
+    } catch {
       setMessage("Something went wrong. Please try again.")
     } finally {
       setPending(false)
@@ -28,11 +26,11 @@ export default function ContactForm() {
 
   return (
     <Card className="p-6 min-w-100 min-sm:mr-10">
-        <CardTitle>
-            <Typography variant="h3">
-                Envoie moi votre mail 
-            </Typography>
-        </CardTitle>
+      <CardTitle>
+        <Typography variant="h3">
+          Envoie moi votre mail 
+        </Typography>
+      </CardTitle>
       <form action={handleSubmit} className="space-y-4">
         <div>
           <label htmlFor="name" className="block text-sm font-medium mb-2">

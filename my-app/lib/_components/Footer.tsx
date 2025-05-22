@@ -1,23 +1,23 @@
 "use client"
 
 import type React from "react"
-
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import { Github, Linkedin, Twitter, Mail, ExternalLink, Heart, Coffee } from "lucide-react"
 import { Typography } from "@/components/ui/Typography"
 
+// ✅ Déplacé hors du composant pour éviter la dépendance dans useEffect
+const devQuotes = [
+  "Le code est comme l'humour. Quand on doit l'expliquer, c'est mauvais.",
+  "Il y a deux façons d'écrire du code sans bug. Seule la troisième fonctionne.",
+  "Un bon développeur est celui qui regarde des deux côtés avant de traverser une rue à sens unique.",
+  "Le débogage, c'est comme être un détective dans un film policier où vous êtes aussi le meurtrier.",
+  "La programmation n'est pas à propos des solutions, mais à propos de la résolution de problèmes.",
+]
+
 export default function Footer() {
   const [year, setYear] = useState(new Date().getFullYear())
   const [randomQuote, setRandomQuote] = useState("")
-
-  const devQuotes = [
-    "Le code est comme l'humour. Quand on doit l'expliquer, c'est mauvais.",
-    "Il y a deux façons d'écrire du code sans bug. Seule la troisième fonctionne.",
-    "Un bon développeur est celui qui regarde des deux côtés avant de traverser une rue à sens unique.",
-    "Le débogage, c'est comme être un détective dans un film policier où vous êtes aussi le meurtrier.",
-    "La programmation n'est pas à propos des solutions, mais à propos de la résolution de problèmes.",
-  ]
 
   useEffect(() => {
     setYear(new Date().getFullYear())
@@ -26,8 +26,8 @@ export default function Footer() {
 
   return (
     <footer className="relative bg-gradient-to-b from-gray-900 to-black text-gray-300 pt-16 pb-8 overflow-hidden">
-      {/* Éléments décoratifs */}
       <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500"></div>
+
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden opacity-10 pointer-events-none">
         <div className="absolute -left-4 top-10 text-xs font-mono text-blue-500 whitespace-pre">
           {`
@@ -35,7 +35,7 @@ function createAmazingWebsite() {
   const skills = ['React', 'Next.js', 'TypeScript', 'Tailwind'];
   const passion = 100;
   const coffee = Infinity;
-  
+
   return skills.reduce((website, skill) => {
     return website + skill + passion + coffee;
   }, 'https://');
@@ -57,7 +57,7 @@ while (alive) {
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-10">
-          {/* Logo et info */}
+          {/* Logo et infos */}
           <div className="lg:col-span-1">
             <div className="flex flex-col items-center md:items-start">
               <div className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500 mb-3">
@@ -108,15 +108,16 @@ while (alive) {
               Citation du Jour
             </Typography>
             <div className="bg-gray-800 bg-opacity-50 p-4 rounded-lg border border-gray-700">
-              <blockquote className="italic text-gray-300 text-center md:text-left">"{randomQuote}"</blockquote>
+              <blockquote className="italic text-gray-300 text-center md:text-left">
+                &quot;{randomQuote}&quot;
+              </blockquote>
             </div>
           </div>
         </div>
 
-        {/* Séparateur */}
         <div className="h-px bg-gradient-to-r from-transparent via-gray-700 to-transparent my-8"></div>
 
-        {/* Copyright et signature */}
+        {/* Footer bottom */}
         <div className="flex flex-col md:flex-row justify-between items-center text-sm text-gray-500">
           <div className="mb-4 md:mb-0 text-center md:text-left">
             © {year} Luc Dalland NKODIA DE MATSIKA. Tous droits réservés.
@@ -134,7 +135,7 @@ while (alive) {
   )
 }
 
-// Composant pour les liens du footer
+// Composant lien de navigation
 function FooterLink({ href, label }: { href: string; label: string }) {
   return (
     <li>
@@ -149,7 +150,7 @@ function FooterLink({ href, label }: { href: string; label: string }) {
   )
 }
 
-// Composant pour les liens sociaux
+// Composant lien social
 function SocialLink({ href, icon, label }: { href: string; icon: React.ReactNode; label: string }) {
   return (
     <Link

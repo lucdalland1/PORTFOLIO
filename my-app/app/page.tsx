@@ -13,41 +13,41 @@ function Page() {
   const pageRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
+    const currentPage = pageRef.current; // ✅ copie sécurisée de la ref
+  
     const options = {
       root: null,
       rootMargin: "0px",
-      threshold: 0.1, // 10% de l'élément visible
-    }
-
+      threshold: 0.1,
+    };
+  
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
-        // Ajoute la classe quand l'élément entre dans le viewport
         if (entry.isIntersecting) {
-          entry.target.classList.add("animate-section")
+          entry.target.classList.add("animate-section");
         } else {
-          // Retire la classe quand l'élément sort du viewport
-          entry.target.classList.remove("animate-section")
+          entry.target.classList.remove("animate-section");
         }
-      })
-    }, options)
-
-    // Sélectionner tous les éléments à animer
-    if (pageRef.current) {
-      const sections = pageRef.current.querySelectorAll(".section-animate")
+      });
+    }, options);
+  
+    if (currentPage) {
+      const sections = currentPage.querySelectorAll(".section-animate");
       sections.forEach((section) => {
-        observer.observe(section)
-      })
+        observer.observe(section);
+      });
     }
-
+  
     return () => {
-      if (pageRef.current) {
-        const sections = pageRef.current.querySelectorAll(".section-animate")
+      if (currentPage) {
+        const sections = currentPage.querySelectorAll(".section-animate");
         sections.forEach((section) => {
-          observer.unobserve(section)
-        })
+          observer.unobserve(section);
+        });
       }
-    }
-  }, [])
+    };
+  }, []);
+  
 
   return (
     <div ref={pageRef} className="flex flex-col gap-5">

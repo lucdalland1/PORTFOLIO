@@ -17,25 +17,28 @@ function Service() {
 
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          // Ajouter la classe pour déclencher l'animation
-          entry.target.classList.add("in-view")
+        // Sauvegarder les éléments dans des variables locales pour éviter les effets de race
+        const isInView = entry.isIntersecting;
+        const target = entry.target;
 
-          // Pour les conteneurs de cartes, animer chaque carte séquentiellement
-          if (entry.target.classList.contains("cards-container")) {
-            const cards = entry.target.querySelectorAll(".service-card")
+        if (isInView) {
+          target.classList.add("in-view")
+
+          // Observer les cartes de manière séquentielle
+          if (target.classList.contains("cards-container")) {
+            const cards = target.querySelectorAll(".service-card")
             cards.forEach((card, index) => {
               setTimeout(() => {
                 card.classList.add("card-visible")
-              }, 150 * index) // Délai progressif pour chaque carte
+              }, 150 * index)
             })
           }
         } else {
-          // Réinitialiser les animations quand l'élément sort du viewport
-          entry.target.classList.remove("in-view")
+          target.classList.remove("in-view")
 
-          if (entry.target.classList.contains("cards-container")) {
-            const cards = entry.target.querySelectorAll(".service-card")
+          // Réinitialiser les cartes
+          if (target.classList.contains("cards-container")) {
+            const cards = target.querySelectorAll(".service-card")
             cards.forEach((card) => {
               card.classList.remove("card-visible")
             })
@@ -44,23 +47,19 @@ function Service() {
       })
     }, options)
 
-    // Observer le titre et le conteneur de cartes
-    if (componentRef.current) {
-      const elementsToAnimate = componentRef.current.querySelectorAll(".animate-element")
-      elementsToAnimate.forEach((element) => {
-        observer.observe(element)
+    // Observer les éléments à animer
+    const elementsToAnimate = componentRef.current?.querySelectorAll(".animate-element")
+    elementsToAnimate?.forEach((element) => {
+      observer.observe(element)
+    })
+
+    // Cleanup: Déconnexion de l'observateur
+    return () => {
+      elementsToAnimate?.forEach((element) => {
+        observer.unobserve(element)
       })
     }
-
-    return () => {
-      if (componentRef.current) {
-        const elementsToAnimate = componentRef.current.querySelectorAll(".animate-element")
-        elementsToAnimate.forEach((element) => {
-          observer.unobserve(element)
-        })
-      }
-    }
-  }, [])
+  }, []) // Le useEffect est exécuté une seule fois lors du montage du composant
 
   return (
     <div id="Service" ref={componentRef} className="flex justify-center flex-col items-center gap-6 py-8">
@@ -70,33 +69,37 @@ function Service() {
         </Typography>
       </div>
 
-      <div className="animate-element cards-container w-full max-w-3xl grid grid-cols-4 gap-2 ">
-       <Card className="service-card col-span-full sm:col-span-2 md:col-span-1" >
-                <CardService nombre={0} titre={"Freelance"} label={"Développement de projets sur mesure selon vos besoins. Flexibilité et disponibilité pour des missions ponctuelles ou régulières."} Tab={[
-            "Projets sur mesure",
-            "Flexibilité horaire",
-            "Tarification au projet",
-          ]} icon={undefined} />
-
-       </Card>
-        <Card className="service-card col-span-full sm:col-span-2 md:col-span-1" >
-                <CardService nombre={0} titre={"Full-Time"} label={"Intégration complète au sein de votre équipe. Collaboration étroite et engagement total dans vos projets d'entreprise."} Tab={[
-            "Engagement long terme",
-            "Intégration équipe",
-            "Support continu",
-          ]} icon={undefined} />
-
-       </Card> 
-       <Card className="service-card col-span-full sm:col-span-2 md:col-span-1">
-                <CardService nombre={0} titre={"Full-Remote"} label={"Travail à distance avec une communication efficace. Adaptation aux différents fuseaux horaires et méthodes de travail."} Tab={["Travail à distance",
-            "Communication asynchrone",
-            "Disponibilité flexible"]} icon={undefined} />
-
-       </Card> 
-       <Card className="service-card col-span-full sm:col-span-2 md:col-span-1">
-                <CardService nombre={0} titre={"Enseignant"} label={""} Tab={[]} icon={undefined} />
-
-       </Card>
+      <div className="animate-element cards-container w-full max-w-3xl grid grid-cols-4 gap-2">
+        <Card className="service-card col-span-full sm:col-span-2 md:col-span-1">
+          <CardService
+            nombre={0}
+            titre={"Freelance"}
+            label={"Développement de projets sur mesure selon vos besoins. Flexibilité et disponibilité pour des missions ponctuelles ou régulières."}
+            Tab={["Projets sur mesure", "Flexibilité horaire", "Tarification au projet"]}
+            icon={undefined}
+          />
+        </Card>
+        <Card className="service-card col-span-full sm:col-span-2 md:col-span-1">
+          <CardService
+            nombre={0}
+            titre={"Full-Time"}
+            label={"Intégration complète au sein de votre équipe. Collaboration étroite et engagement total dans vos projets d'entreprise."}
+            Tab={["Engagement long terme", "Intégration équipe", "Support continu"]}
+            icon={undefined}
+          />
+        </Card>
+        <Card className="service-card col-span-full sm:col-span-2 md:col-span-1">
+          <CardService
+            nombre={0}
+            titre={"Full-Remote"}
+            label={"Travail à distance avec une communication efficace. Adaptation aux différents fuseaux horaires et méthodes de travail."}
+            Tab={["Travail à distance", "Communication asynchrone", "Disponibilité flexible"]}
+            icon={undefined}
+          />
+        </Card>
+        <Card className="service-card col-span-full sm:col-span-2 md:col-span-1">
+          <CardService nombre={0} titre={"Enseignant"} label={""} Tab={[]} icon={undefined} />
+        </Card>
       </div>
 
       <style jsx global>{`
@@ -106,18 +109,18 @@ function Service() {
           overflow: hidden;
           padding: 10px 0;
         }
-        
+
         .services-title {
           opacity: 0;
           transform: translateY(100%);
           transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
-        
+
         .title-container.in-view .services-title {
           opacity: 1;
           transform: translateY(0);
         }
-        
+
         .title-container::after {
           content: '';
           position: absolute;
@@ -129,11 +132,11 @@ function Service() {
           transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1);
           transform: translateX(-50%);
         }
-        
+
         .title-container.in-view::after {
           width: 80px;
         }
-        
+
         /* Animation des cartes */
         .service-card {
           opacity: 0;
@@ -143,26 +146,26 @@ function Service() {
           box-shadow: 0 10px 50px rgba(0, 0, 0, 0.1);
           margin-bottom: 20px;
         }
-        
+
         .service-card.card-visible {
           opacity: 1;
           transform: perspective(1000px) rotateX(0) translateY(0) scale(1);
           filter: blur(0);
           box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
         }
-        
+
         /* Effet de survol sur les cartes */
         .service-card.card-visible:hover {
           transform: perspective(1000px) translateY(-5px) scale(1.02);
           box-shadow: 0 30px 60px rgba(0, 0, 0, 0.15);
           transition: all 0.4s ease-out;
         }
-        
+
         /* Animation du conteneur de cartes */
         .cards-container {
           position: relative;
         }
-        
+
         .cards-container::before {
           content: '';
           position: absolute;
@@ -176,7 +179,7 @@ function Service() {
           pointer-events: none;
           z-index: -1;
         }
-        
+
         .cards-container.in-view::before {
           opacity: 0.5;
         }

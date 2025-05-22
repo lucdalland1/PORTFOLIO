@@ -1,7 +1,4 @@
-import { Card, CardContent, CardFooter } from '@/components/ui/card'
 import React from 'react'
-import { Code } from 'lucide-react'
-import { number } from 'framer-motion'
 import { Typography } from '@/components/ui/Typography';
 import { Badge } from '@/components/ui/badge';
 import { Verified } from 'lucide-react';
