@@ -1,99 +1,216 @@
 "use client"
 
+import type React from "react"
+
+import { useEffect, useRef, useState } from "react"
+import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Typography } from "@/components/ui/Typography"
-import { useEffect, useRef } from "react"
-import Image from "next/image"
+import { Download, ArrowRight, Github, Linkedin, Twitter } from "lucide-react"
+import { motion } from "framer-motion"
+import Link from "next/link"
 
-function SectionPresentation({ ...props }) {
-  const componentRef = useRef<HTMLDivElement>(null)
+function SectionPresentation() {
+  const [isVisible, setIsVisible] = useState(false)
+  const sectionRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    const options = {
-      root: null,
-      rootMargin: "0px",
-      threshold: 0.1,
-    }
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("animate-element")
-        } else {
-          entry.target.classList.remove("animate-element")
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setIsVisible(true)
+          observer.disconnect()
         }
-      })
-    }, options)
+      },
+      { threshold: 0.1 },
+    )
 
-    // Observer les éléments à animer
-    if (componentRef.current) {
-      const elements = componentRef.current.querySelectorAll(".animate-on-scroll")
-      elements.forEach((element) => {
-        observer.observe(element)
-      })
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current)
     }
 
     return () => {
-      if (componentRef.current) {
-        const elements = componentRef.current.querySelectorAll(".animate-on-scroll")
-        elements.forEach((element) => {
-          observer.unobserve(element)
-        })
-      }
+      observer.disconnect()
     }
   }, [])
 
+  // Variants pour les animations
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+        delayChildren: 0.3,
+      },
+    },
+  }
+
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        duration: 0.8,
+        ease: [0.22, 1, 0.36, 1],
+      },
+    },
+  }
+
+  const imageVariants = {
+    hidden: { scale: 0.8, opacity: 0 },
+    visible: {
+      scale: 1,
+      opacity: 1,
+      transition: {
+        duration: 1,
+        ease: [0.22, 1, 0.36, 1],
+      },
+    },
+  }
+
+  const backgroundShapeVariants = {
+    hidden: { scale: 0, opacity: 0 },
+    visible: {
+      scale: 1,
+      opacity: 1,
+      transition: {
+        duration: 1.5,
+        ease: [0.22, 1, 0.36, 1],
+      },
+    },
+  }
+
   return (
     <div
-      ref={componentRef}
-      className="flex flex-col lg:flex-row items-start justify-between w-full h-auto gap-y-6 lg:gap-x-40"
+    id="Sectionpresentation"
+      ref={sectionRef}
+      className="relative py-16 md:py-24 lg:py-32 px-4 sm:px-6 lg:px-8 overflow-hidden bg-gradient-to-b from-white to-gray-50 dark:from-gray-900 dark:to-gray-950"
     >
-      {/* Bloc Texte + Boutons */}
-      <div className="w-full lg:w-1/3 text-md flex justify-start items-start flex-col gap-3 h-auto animate-on-scroll">
-        <Typography variant="h3" className="max-sm:m-auto">
-          Bonjour, je suis Luc
-        </Typography>
+      {/* Formes décoratives en arrière-plan */}
+      <motion.div
+        className="absolute top-0 right-0 w-1/2 h-1/2 bg-blue-50 dark:bg-blue-900/10 rounded-full blur-3xl -z-10"
+        initial="hidden"
+        animate={isVisible ? "visible" : "hidden"}
+        variants={backgroundShapeVariants}
+      />
+      <motion.div
+        className="absolute bottom-0 left-0 w-1/2 h-1/2 bg-purple-50 dark:bg-purple-900/10 rounded-full blur-3xl -z-10"
+        initial="hidden"
+        animate={isVisible ? "visible" : "hidden"}
+        variants={backgroundShapeVariants}
+        transition={{ delay: 0.3 }}
+      />
 
-        <Typography variant="h2" className="text-center min-sm:text-left text-2xl/11">
-          Développeur FullStack - Web & Mobile
-        </Typography>
+      <div className="max-w-7xl mx-auto">
+        <motion.div
+          className="flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-16"
+          initial="hidden"
+          animate={isVisible ? "visible" : "hidden"}
+          variants={containerVariants}
+        >
+          {/* Bloc Texte + Boutons */}
+          <div className="w-full lg:w-1/2 flex flex-col items-center lg:items-start text-center lg:text-left space-y-8">
+            <motion.div variants={itemVariants}>
+              <div className="inline-flex items-center px-3 py-1 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 text-sm font-medium mb-4">
+                <span className="w-2 h-2 bg-blue-500 rounded-full mr-2"></span>
+                Disponible pour des projets
+              </div>
+              <Typography variant="h3" className="text-xl text-blue-600 dark:text-blue-400 mb-2">
+                Bonjour, je suis Luc
+              </Typography>
+              <Typography
+                variant="h1"
+                className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4"
+              >
+                Développeur{" "}
+                <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-600">
+                  FullStack
+                </span>
+                <br />
+                Web & Mobile
+              </Typography>
+              <Typography variant="body" className="text-lg text-gray-600 dark:text-gray-300 max-w-lg">
+                Je crée des expériences numériques exceptionnelles avec une attention particulière aux détails, à la
+                performance et à l'accessibilité.
+              </Typography>
+            </motion.div>
 
-        <div className="grid grid-cols-4 gap-2 w-full">
-          <Button className="col-span-full sm:col-span-2" asChild>
-            <Typography variant="h3" className="font-bold">
-              Embauchez-moi
-            </Typography>
-          </Button>
-          <Button variant="outline" className="col-span-full sm:col-span-2" asChild>
-            <Typography variant="h3">Télécharger mon CV</Typography>
-          </Button>
-        </div>
+            <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-4 w-full max-w-md">
+              <Button
+                size="lg"
+                className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-lg flex-1 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-blue-500/20"
+              >
+                Embauchez-moi
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Button>
+              <Button
+                variant="outline"
+                size="lg"
+                className="border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 px-8 py-6 rounded-lg flex-1 transition-all duration-300"
+              asChild
+              >
+                <Link href='https://lucdalland.my.canva.site/'>
+                Télécharger mon CV
+                </Link>
+              </Button>
+            </motion.div>
+
+            <motion.div variants={itemVariants} className="flex gap-4">
+              <SocialButton icon={<Github className="h-5 w-5" />} href="https://github.com" />
+              <SocialButton icon={<Linkedin className="h-5 w-5" />} href="https://linkedin.com" />
+              <SocialButton icon={<Twitter className="h-5 w-5" />} href="https://twitter.com" />
+            </motion.div>
+          </div>
+
+          {/* Image avec effet */}
+          <motion.div className="w-full lg:w-1/2 flex justify-center lg:justify-end relative" variants={imageVariants}>
+            <div className="relative">
+              {/* Cercle décoratif */}
+              <div className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-500/20 to-purple-500/20 blur-2xl transform scale-110 -z-10"></div>
+
+              {/* Image avec bordure */}
+              <div className="relative w-64 h-64 sm:w-80 sm:h-80 rounded-full overflow-hidden border-4 border-white dark:border-gray-800 shadow-xl">
+                <Image
+                  src="/images/luc2.png"
+                  alt="Luc Dalland"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 256px, 320px"
+                  priority
+                />
+              </div>
+
+              {/* Badge décoratif */}
+              <motion.div
+                className="absolute -bottom-4 -right-4 bg-white dark:bg-gray-800 px-4 py-2 rounded-full shadow-lg flex items-center gap-2"
+                initial={{ scale: 0, opacity: 0 }}
+                animate={isVisible ? { scale: 1, opacity: 1 } : { scale: 0, opacity: 0 }}
+                transition={{ delay: 1, duration: 0.5, type: "spring" }}
+              >
+                <span className="text-blue-600 dark:text-blue-400 font-bold">1+</span>
+                <span className="text-gray-700 dark:text-gray-300 text-sm">ans d'expérience Entreprise</span>
+              </motion.div>
+            </div>
+          </motion.div>
+        </motion.div>
       </div>
-
-      {/* Image */}
-      <div className="w-full lg:w-auto animate-on-scroll" style={{ transitionDelay: "0.2s" }}>
-        <Image
-          src="/images/luc2.png"
-          alt="Luc Dalland"
-          width={300}
-          height={300}
-          className="max-sm:m-auto max-sm:w-full  m-auto min-lg:mr-12"
-        />
-      </div>
-
-      <style jsx global>{`
-        .animate-on-scroll {
-          opacity: 0;
-          transform: translateY(50px);
-          transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-        }
-        
-        .animate-element {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      `}</style>
     </div>
+  )
+}
+
+// Composant pour les boutons sociaux
+function SocialButton({ icon, href }: { icon: React.ReactNode; href: string }) {
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-blue-100 dark:hover:bg-blue-900/30 hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-300 transform hover:scale-110"
+    >
+      {icon}
+    </a>
   )
 }
 

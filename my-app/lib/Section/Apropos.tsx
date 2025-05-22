@@ -3,12 +3,11 @@ import React from 'react'
 import Image from 'next/image'
 import Pourcentage from '../_components/Pourcentage'
 import Langues from '../_components/Langues'
-import { LucideAccessibility } from 'lucide-react'
 
 
 function Apropos() {
   return (
-    <div className="flex flex-col sm:flex-row items-center justify-center h-auto pt-20 gap-20">
+    <div id='Apropos' className="flex flex-col sm:flex-row items-center justify-center h-auto pt-20 gap-20">
       <div className="sm:w-1/2 h-auto flex items-start">
         <Image 
           src={'/images/IMG-20210704-WA0103-removebg-preview.png'} 

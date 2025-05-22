@@ -7,7 +7,8 @@ import { Badge } from '@/components/ui/badge';
 import { Verified } from 'lucide-react';
 
 interface Service {
-  nombre: number;
+  
+   nombre: number;
   titre: string;
   label: string;
   Tab: string[];

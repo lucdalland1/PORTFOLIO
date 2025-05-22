@@ -63,7 +63,7 @@ function Service() {
   }, [])
 
   return (
-    <div ref={componentRef} className="flex justify-center flex-col items-center gap-6 py-8">
+    <div id="Service" ref={componentRef} className="flex justify-center flex-col items-center gap-6 py-8">
       <div className="animate-element title-container overflow-hidden">
         <Typography variant="h3" className="services-title">
           Services

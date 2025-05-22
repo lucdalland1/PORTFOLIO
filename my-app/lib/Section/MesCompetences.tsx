@@ -43,7 +43,7 @@ function MesCompetences() {
   }, [])
 
   return (
-    <div ref={componentRef} className="flex flex-col items-center justify-center p-10 gap-10 w-full">
+    <div id="Mescompetences" ref={componentRef} className="flex flex-col items-center justify-center p-10 gap-10 w-full">
       <div data-animate="fade-down" className="animation-item">
         <Typography variant="h3" className="m-auto text-center">
           Mes Compétances
